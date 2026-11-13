@@ -1,18 +1,18 @@
 {
   "meta": {
-    "issue": 2,
+    "issue": 1,
     "date": "2026-11-13",
-    "gen_time": "2026-11-13 12:48:52 北京时间",
+    "gen_time": "2026-11-13 11:51:15 北京时间",
     "seed": 20261113,
-    "category": "换算与计算",
+    "category": "文本处理工具",
     "level": "入门",
-    "tool_type": "unit-converter",
+    "tool_type": "text-tools",
     "route": "模板生成",
     "model": "",
     "source_count": 0,
     "tags": [
-      "换算",
-      "单位"
+      "文本",
+      "统计"
     ]
   },
   "sources": []

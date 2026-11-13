@@ -3,11 +3,11 @@
     {
       "date": "2026-11-13",
       "issue": 2,
-      "title": "多行文本去重与整理工具",
-      "category": "文本处理工具",
+      "title": "常用长度单位换算器",
+      "category": "换算与计算",
       "level": "入门",
       "route": "模板生成",
-      "tool_type": "text-tools",
+      "tool_type": "unit-converter",
       "source_count": 0
     }
   ],

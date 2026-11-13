@@ -52,6 +52,39 @@ def render_html(ctx):
     ) or "<li>本次未取到外部来源，内容为通用整理。</li>"
     dis = "".join(f"<li>{esc(x)}</li>" for x in disclaimer)
 
+    tool_type = meta.get("tool_type", "")
+    script_block = ""
+    if tool_type == "script-py":
+        script_block = (
+            '<div class="card"><h2>运行方式</h2>'
+            f"<p>脚本文件：<code>{esc(guide.get('script_file', 'tool.py'))}</code></p>"
+            f"<p>运行示例：<code>{esc(guide.get('run_example', ''))}</code></p>"
+            '<p class="muted">纯标准库，无需 pip 安装；默认预览，确认后再加执行参数。</p></div>'
+        )
+
+    repo_block = ""
+    if tool_type == "software-pick":
+        gh = [s for s in sources if s.get("source") == "GitHub"]
+        if gh:
+            cards = []
+            for s in gh[:8]:
+                meta_line = f"协议：{esc(s.get('license', '未知'))}"
+                if s.get("lang"):
+                    meta_line += f" · 语言：{esc(s['lang'])}"
+                star = f" ★ {s.get('stars', 0)}"
+                cards.append(
+                    f'<div style="border:1px solid #e6e9ee;border-radius:10px;padding:12px 14px;margin-bottom:12px">'
+                    f'<div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap">'
+                    f"<a href=\"{esc(s.get('url', ''))}\" target=\"_blank\" rel=\"noopener noreferrer\" style=\"font-weight:600\">{esc(s.get('title', ''))}</a>"
+                    f'<span class="muted">{star}</span></div>'
+                    f"<div style=\"font-size:13px;margin:6px 0\">{esc(s.get('snippet', '') or '（暂无简介）')}</div>"
+                    f'<div class="muted" style="font-size:12px">{meta_line}</div></div>'
+                )
+            repo_block = f'<div class="card"><h2>今日开源项目</h2>{"".join(cards)}</div>'
+        else:
+            repo_block = ('<div class="card"><h2>今日开源项目</h2><p>本次未检索到合适的开源项目，'
+                          '许可证以各仓库内 LICENSE 为准。</p></div>')
+
     return f"""<!DOCTYPE html>
 <html lang="zh-CN"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -99,6 +132,9 @@ a{{color:#4f6b9a}}
 
 <div class="card"><h2>简介</h2><p>{esc(guide.get('intro', ''))}</p></div>
 
+{script_block}
+{repo_block}
+
 <div class="two">
   <div><h2>工具清单</h2><ul>{_list_html(guide.get('tools', []))}</ul></div>
   <div><h2>材料 / 零件</h2><ul>{_list_html(guide.get('materials', []))}</ul></div>
@@ -136,6 +172,11 @@ def render_md(ctx):
         "## 工具清单",
     ]
     lines += [f"- {x}" for x in guide.get("tools", [])] or ["- —"]
+    if meta.get("tool_type") == "script-py":
+        lines += ["", "## 运行方式",
+                  f"- 脚本文件：{guide.get('script_file', 'tool.py')}",
+                  f"- 运行示例：`{guide.get('run_example', '')}`",
+                  "- 纯标准库，无需 pip 安装；默认预览，确认后再加执行参数。"]
     lines += ["", "## 材料 / 零件"]
     lines += [f"- {x}" for x in guide.get("materials", [])] or ["- —"]
     lines += ["", "## 操作步骤"]
@@ -145,6 +186,15 @@ def render_md(ctx):
     lines += [f"- {x}" for x in guide.get("cautions", [])] or ["- —"]
     lines += ["", "## 常见问题与排查"]
     lines += [f"- {x}" for x in guide.get("troubleshooting", [])] or ["- —"]
+    if meta.get("tool_type") == "software-pick":
+        gh = [s for s in sources if s.get("source") == "GitHub"]
+        lines += ["", "## 今日开源项目"]
+        if gh:
+            for s in gh[:8]:
+                lines.append(f"- [{s.get('title', '')}]({s.get('url', '')}) — {s.get('snippet', '')}"
+                             f"（协议：{s.get('license', '未知')} · ★{s.get('stars', 0)}）")
+        else:
+            lines.append("- 本次未检索到合适的开源项目，许可证以各仓库内 LICENSE 为准。")
     lines += ["", "## 验收标准", guide.get("success", ""), "", "## 参考来源"]
     for s in sources:
         lines.append(f"- {s['title']}（{s['source']}）：{s['url']}")
@@ -167,14 +217,14 @@ def update_readme(history):
 
     body = f"""# daily-maker
 
-每天自动产出一个**能直接打开使用**的小工具/小作品，配一份图文说明：颜色设计、文本处理、换算计算、计时专注、决策随机、清单对照、生成艺术等方向轮转。成品是本地单文件网页（离线可用、不上传数据），按日期归档，历史作品不回写、不覆盖。
+每天自动产出一个**能直接使用**的小工具/小作品，配一份图文说明。成品分三类：本地单文件网页工具（离线可用、不上传数据）、纯标准库 Python 小脚本、开源项目推荐卡片（只链官方仓库，不复制安装包/源码）。按日期归档，历史作品不回写、不覆盖。
 
 ## 它每天做什么
 
 1. **选题**：按当天日期作随机种子，从 `config/topics.json` 选题池抽取，自动避开近期用过的题目与敏感词。
-2. **取材**：检索多个公开来源的摘要（维基 / DuckDuckGo / StackExchange），保留参考链接。
+2. **取材**：检索多个公开来源的摘要（维基 / DuckDuckGo / StackExchange / GitHub），保留参考链接。
 3. **归纳**：配置了 LLM Key 时由模型把素材整理成结构化教程；无 Key 或调用失败时，自动降级为模板拼装；素材也不足时使用内置兜底条目。
-4. **产出**：写入 `output/YYYY-MM-DD/`（`app.html` 可直接使用的成品、`index.html` 图文说明、`guide.md` 可读版、`meta.json` 元数据），并在下表登记索引。
+4. **产出**：写入 `output/YYYY-MM-DD/`（`app.html` 成品页、`index.html` 图文说明、`guide.md` 可读版、`meta.json` 元数据；脚本类另附 `tool.py`），并在下表登记索引。
 
 ## 每日产出
 
@@ -191,7 +241,7 @@ daily-maker/
 ├── scripts/research.py       # 公开来源检索（多源降级）
 ├── scripts/llm.py            # 可选 LLM 归纳（OpenRouter 兼容）
 ├── scripts/render.py         # HTML / Markdown / README 索引渲染
-├── scripts/templates.py      # 本地已测可用的单文件成品模板库
+├── scripts/templates.py      # 本地已测模板库（网页工具 / Python 脚本 / 开源推荐卡片）
 ├── scripts/generate.py       # 主流程
 ├── output/YYYY-MM-DD/        # 当日作品归档
 └── .github/workflows/daily.yml

@@ -1,7 +1,7 @@
 {
-  "_说明": "每日选题池。每条 topic 的 tool_type 对应 scripts/templates.py 里一个已测可用的单文件 HTML 成品；代码不写死题目。query_en/query_zh 用于检索公开资料写配套说明。",
+  "_说明": "每日选题池。每条 topic 的 tool_type 对应 scripts/templates.py 里一个已测可用的成品（单文件网页 / Python 脚本 / 开源推荐卡片）；代码不写死题目。query_en/query_zh 用于检索公开资料写配套说明。",
   "avoid_recent_days": 21,
-  "tool_types": ["color-palette", "gradient", "text-tools", "unit-converter", "timestamp", "timer", "decision", "checklist", "counter", "generative-art"],
+  "tool_types": ["color-palette", "gradient", "text-tools", "unit-converter", "timestamp", "timer", "decision", "checklist", "counter", "generative-art", "script-py", "software-pick"],
   "categories": [
     {
       "id": "design",
@@ -67,12 +67,31 @@
         {"title": "圆形分形装饰图案", "tool_type": "generative-art", "query_en": "circular fractal ornament pattern svg", "query_zh": "圆形 分形 装饰 图案", "level": "进阶", "tags": ["分形", "SVG"]},
         {"title": "点阵星图生成器", "tool_type": "generative-art", "query_en": "dot grid starfield generative svg", "query_zh": "点阵 星图 生成 SVG", "level": "入门", "tags": ["点阵", "SVG"]}
       ]
+    },
+    {
+      "id": "script",
+      "name": "小开发与脚本",
+      "topics": [
+        {"title": "批量文件按序号重命名脚本", "tool_type": "script-py", "script_id": "rename", "query_en": "batch rename files prefix sequence python standard library", "query_zh": "批量重命名 文件 前缀 序号 Python 脚本", "level": "入门", "tags": ["脚本", "文件"]},
+        {"title": "文本文件去重与统计脚本", "tool_type": "script-py", "script_id": "text", "query_en": "deduplicate lines text file count python standard library", "query_zh": "文本 去重 行数 统计 Python 脚本", "level": "入门", "tags": ["脚本", "文本"]},
+        {"title": "按扩展名归类文件脚本", "tool_type": "script-py", "script_id": "organize", "query_en": "organize files by extension folder python standard library", "query_zh": "文件 按扩展名 归类 文件夹 Python 脚本", "level": "入门", "tags": ["脚本", "整理"]}
+      ]
+    },
+    {
+      "id": "software",
+      "name": "开源工具推荐",
+      "topics": [
+        {"title": "今日开源效率工具精选", "tool_type": "software-pick", "query_en": "productivity open source tool github", "query_zh": "开源 效率工具 GitHub", "level": "入门", "tags": ["开源", "推荐"]},
+        {"title": "今日开源开发者小工具", "tool_type": "software-pick", "query_en": "developer tools open source github stars", "query_zh": "开发者 工具 开源 GitHub", "level": "入门", "tags": ["开源", "开发"]},
+        {"title": "今日开源桌面实用软件", "tool_type": "software-pick", "query_en": "open source desktop utility application github", "query_zh": "桌面 实用软件 开源 GitHub", "level": "入门", "tags": ["开源", "桌面"]}
+      ]
     }
   ],
   "blacklist": [
     "医疗诊断", "用药", "处方", "手术", "法律诉讼", "理财", "荐股", "炒股", "贷款",
     "武器", "枪支", "爆炸物", "炸药", "毒品", "制毒", "易燃易爆", "强电", "市电接线", "配电箱改造",
-    "燃气", "烟花爆竹", "破解", "入侵", "黑客", "翻墙", "盗版", "隐私", "车辆改装提速", "酒驾"
+    "燃气", "烟花爆竹", "破解", "入侵", "黑客", "翻墙", "盗版", "隐私", "车辆改装提速", "酒驾",
+    "激活码", "注册机", "绿色版", "破解版", "外挂", "去广告补丁", "序列号"
   ],
   "fallback": {
     "title": "通用计数统计器",

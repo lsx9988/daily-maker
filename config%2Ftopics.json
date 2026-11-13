@@ -1,0 +1,100 @@
+{
+  "_说明": "每日选题池。每条 topic 的 tool_type 对应 scripts/templates.py 里一个已测可用的单文件 HTML 成品；代码不写死题目。query_en/query_zh 用于检索公开资料写配套说明。",
+  "avoid_recent_days": 21,
+  "tool_types": ["color-palette", "gradient", "text-tools", "unit-converter", "timestamp", "timer", "decision", "checklist", "counter", "generative-art"],
+  "categories": [
+    {
+      "id": "design",
+      "name": "颜色与设计",
+      "topics": [
+        {"title": "今日配色板：一键取色复制", "tool_type": "color-palette", "query_en": "color palette generator hex copy", "query_zh": "配色板 色值 生成 复制", "level": "入门", "tags": ["配色", "取色"]},
+        {"title": "渐变背景生成器", "tool_type": "gradient", "query_en": "css gradient background generator", "query_zh": "渐变背景 CSS 生成", "level": "入门", "tags": ["渐变", "CSS"]},
+        {"title": "桌面壁纸几何生成艺术", "tool_type": "generative-art", "query_en": "generative geometric art svg pattern", "query_zh": "几何 生成艺术 图案 SVG", "level": "入门", "tags": ["生成艺术", "SVG"]},
+        {"title": "小组件配色对照卡", "tool_type": "checklist", "query_en": "ui color contrast checklist", "query_zh": "配色 对比度 对照 检查", "level": "入门", "tags": ["对照卡", "配色"]}
+      ]
+    },
+    {
+      "id": "text",
+      "name": "文本处理工具",
+      "topics": [
+        {"title": "文本字数与格式统计工具", "tool_type": "text-tools", "query_en": "text word count character counter", "query_zh": "字数统计 字符数 文本工具", "level": "入门", "tags": ["文本", "统计"]},
+        {"title": "多行文本去重与整理工具", "tool_type": "text-tools", "query_en": "deduplicate lines text sort tool", "query_zh": "文本 去重 排序 换行 整理", "level": "入门", "tags": ["文本", "去重"]},
+        {"title": "大小写与空格批量转换", "tool_type": "text-tools", "query_en": "case converter uppercase lowercase trim", "query_zh": "大小写转换 去除空格 文本", "level": "入门", "tags": ["文本", "转换"]}
+      ]
+    },
+    {
+      "id": "calc",
+      "name": "换算与计算",
+      "topics": [
+        {"title": "常用长度单位换算器", "tool_type": "unit-converter", "query_en": "length unit converter cm inch meter", "query_zh": "长度单位 换算 厘米 英寸 米", "level": "入门", "tags": ["换算", "单位"]},
+        {"title": "日期与时间戳互转工具", "tool_type": "timestamp", "query_en": "unix timestamp date converter", "query_zh": "时间戳 日期 转换 工具", "level": "入门", "tags": ["时间", "转换"]},
+        {"title": "简易计数统计器", "tool_type": "counter", "query_en": "click counter tally count tool", "query_zh": "计数器  tally  点击计数", "level": "入门", "tags": ["计数", "统计"]}
+      ]
+    },
+    {
+      "id": "timer",
+      "name": "计时与专注",
+      "topics": [
+        {"title": "可暂停的倒计时器", "tool_type": "timer", "query_en": "countdown timer pause reset javascript", "query_zh": "倒计时器 暂停 重置 网页", "level": "入门", "tags": ["计时", "专注"]},
+        {"title": "专注分段计时表", "tool_type": "timer", "query_en": "pomodoro focus timer segments", "query_zh": "番茄钟 分段专注 计时", "level": "入门", "tags": ["专注", "番茄钟"]},
+        {"title": "任务清点核对清单", "tool_type": "checklist", "query_en": "interactive checklist todo offline", "query_zh": "可勾选 清单 核对 网页", "level": "入门", "tags": ["清单", "勾选"]}
+      ]
+    },
+    {
+      "id": "random",
+      "name": "决策与随机",
+      "topics": [
+        {"title": "随机抽签与决策器", "tool_type": "decision", "query_en": "random picker decision maker list", "query_zh": "随机抽签 决策器 列表 抽取", "level": "入门", "tags": ["随机", "决策"]},
+        {"title": "硬币骰子随机模拟器", "tool_type": "decision", "query_en": "coin flip dice roll simulator", "query_zh": "抛硬币 掷骰子 随机 模拟", "level": "入门", "tags": ["随机", "模拟"]},
+        {"title": "今日待办随机排序器", "tool_type": "decision", "query_en": "shuffle list random order todo", "query_zh": "列表 随机打乱 排序 待办", "level": "入门", "tags": ["随机", "排序"]}
+      ]
+    },
+    {
+      "id": "craft",
+      "name": "制作与维修对照",
+      "topics": [
+        {"title": "焊接前检查对照清单", "tool_type": "checklist", "query_en": "soldering pre-check safety checklist", "query_zh": "焊接 前 检查 清单 安全", "level": "进阶", "tags": ["焊接", "清单"]},
+        {"title": "拆机维修步骤核对表", "tool_type": "checklist", "query_en": "electronics disassembly repair steps checklist", "query_zh": "拆机 维修 步骤 核对 清单", "level": "进阶", "tags": ["维修", "步骤"]},
+        {"title": "工具零件收纳盘点表", "tool_type": "checklist", "query_en": "tool parts inventory checklist", "query_zh": "工具 零件 盘点 清单", "level": "入门", "tags": ["收纳", "清单"]},
+        {"title": "线材规格速查对照卡", "tool_type": "checklist", "query_en": "cable gauge spec quick reference", "query_zh": "线材 规格 速查 对照", "level": "入门", "tags": ["线材", "速查"]}
+      ]
+    },
+    {
+      "id": "art",
+      "name": "生成视觉作品",
+      "topics": [
+        {"title": "种子驱动的波纹线条画", "tool_type": "generative-art", "query_en": "generative wave line art svg seed", "query_zh": "波纹 线条 生成艺术 种子", "level": "入门", "tags": ["生成艺术", "线条"]},
+        {"title": "圆形分形装饰图案", "tool_type": "generative-art", "query_en": "circular fractal ornament pattern svg", "query_zh": "圆形 分形 装饰 图案", "level": "进阶", "tags": ["分形", "SVG"]},
+        {"title": "点阵星图生成器", "tool_type": "generative-art", "query_en": "dot grid starfield generative svg", "query_zh": "点阵 星图 生成 SVG", "level": "入门", "tags": ["点阵", "SVG"]}
+      ]
+    }
+  ],
+  "blacklist": [
+    "医疗诊断", "用药", "处方", "手术", "法律诉讼", "理财", "荐股", "炒股", "贷款",
+    "武器", "枪支", "爆炸物", "炸药", "毒品", "制毒", "易燃易爆", "强电", "市电接线", "配电箱改造",
+    "燃气", "烟花爆竹", "破解", "入侵", "黑客", "翻墙", "盗版", "隐私", "车辆改装提速", "酒驾"
+  ],
+  "fallback": {
+    "title": "通用计数统计器",
+    "tool_type": "counter",
+    "category": "实用工具",
+    "level": "入门",
+    "intro": "兜底成品：一个可在浏览器里直接使用的计数统计器，点击即可累加、递减与清零。",
+    "tools": ["浏览器"],
+    "materials": [],
+    "steps": [
+      {"step": 1, "action": "打开当日目录下的 app.html，页面加载即可用。", "tip": "无需联网、无需安装。"},
+      {"step": 2, "action": "点击加号累加，点击减号递减，需要时点清零重置。", "tip": "数字会实时显示在页面中央。"},
+      {"step": 3, "action": "把它用于清点零件、记录次数等场景。", "tip": "刷新页面后计数会重置。"}
+    ],
+    "cautions": ["本工具为本地页面，不上传任何数据。"],
+    "troubleshooting": ["页面无响应：刷新浏览器后重试；确认用的是现代浏览器。"],
+    "success": "能正常加减计数并清零。"
+  },
+  "disclaimer": [
+    "本项目的成品为本地单文件网页工具，配套说明由公开资料检索后经 AI 归纳整理自动生成，可能存在错误、过时或遗漏；实际操作前请核对官方文档与可靠来源。",
+    "涉及电气、高温、锋利工具、化学品、登高、车辆等操作时，请遵守安全规范并做好防护；不确定如何操作时，请咨询具备资质的专业人员。",
+    "本内容不构成医疗、法律、财务等专业建议；因照搬本教程或使用本工具产生的任何后果，由使用者自行承担。",
+    "文中资料为对公开来源的归纳改写，参考链接见当日页面，原始版权归原作者所有。"
+  ]
+}

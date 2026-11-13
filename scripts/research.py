@@ -103,6 +103,31 @@ def _stackexchange(query, site="electronics"):
     return out
 
 
+def _github(query, limit=6):
+    """GitHub 仓库搜索（开源项目推荐用）。无 token 也可调，限速较宽。"""
+    if not query:
+        return []
+    q = urllib.parse.quote(query)
+    url = (f"https://api.github.com/search/repositories?q={q}&sort=stars"
+           f"&order=desc&per_page={limit}")
+    obj = _get_json(url)
+    if not obj:
+        return []
+    out = []
+    for it in (obj.get("items") or [])[:limit]:
+        lic = (it.get("license") or {}).get("spdx_id") or "未知"
+        out.append({
+            "title": it.get("full_name", query),
+            "url": it.get("html_url", ""),
+            "snippet": _clean(it.get("description") or "（该仓库未填写简介）", 200),
+            "source": "GitHub",
+            "license": lic,
+            "stars": it.get("stargazers_count", 0),
+            "lang": it.get("language") or "",
+        })
+    return out
+
+
 def research(topic):
     """聚合多源摘要。返回 {"sources": [...], "errors": [...]}。"""
     sources, errors = [], []
@@ -117,6 +142,20 @@ def research(topic):
                 continue
             seen.add(key)
             sources.append(it)
+
+    tool_type = topic.get("tool_type", "")
+
+    # 开源推荐类：以 GitHub 仓库搜索为主，DuckDuckGo 补摘要
+    if tool_type == "software-pick":
+        try:
+            add(_github(topic.get("query_en", topic.get("title", ""))))
+        except Exception as e:  # noqa: BLE001
+            errors.append(f"github: {type(e).__name__}")
+        try:
+            add(_ddg(topic.get("query_zh", topic.get("title", ""))))
+        except Exception as e:  # noqa: BLE001
+            errors.append(f"ddg:{type(e).__name__}")
+        return {"sources": sources[:8], "errors": errors}
 
     queries = [("en", topic.get("query_en", "")), ("zh", topic.get("query_zh", ""))]
     for lang, q in queries:

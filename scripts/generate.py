@@ -74,6 +74,44 @@ def main():
         guide = config.get("fallback", {})
         route = "兜底条目"
 
+    tool_type = topic.get("tool_type", "counter")
+
+    # 按成品类型适配说明字段：脚本类 / 开源推荐类有专门的步骤与清单
+    script_meta = None
+    repos = []
+    if tool_type == "script-py":
+        script_meta = templates.render_script(topic.get("script_id", "rename"))
+        guide["tools"] = ["Python 3.8 及以上（纯标准库，无需 pip 安装）"]
+        guide["materials"] = []
+        guide["script_file"] = script_meta["file"]
+        guide["run_example"] = script_meta["run_example"]
+        guide["script_desc"] = script_meta["desc"]
+        guide["intro"] = guide.get("intro") or script_meta["desc"]
+        guide["steps"] = [
+            {"step": 1, "action": "把当日目录下的 tool.py 保存到要处理的文件夹，或记下它的完整路径。",
+             "tip": "脚本为纯标准库，无需安装任何第三方包。"},
+            {"step": 2, "action": "打开终端，按运行示例先不带执行参数跑一遍预览（dry-run）。",
+             "tip": "预览只打印计划，不改动任何文件。"},
+            {"step": 3, "action": "确认预览无误后，再加 --apply / --write 参数正式执行。",
+             "tip": "不确定时先在少量测试文件上试。"},
+            {"step": 4, "action": "对照验收标准确认输出符合预期。",
+             "tip": "脚本不上传任何数据，全部在本地运行。"},
+        ]
+        guide["cautions"] = ["执行重命名、移动、写出类操作前先备份重要文件；脚本默认预览，确认后再加执行参数。"]
+        guide["success"] = "脚本能在终端运行，并正确给出预览或处理结果。"
+    elif tool_type == "software-pick":
+        repos = [s for s in sources if s.get("source") == "GitHub"]
+        guide["tools"] = ["现代浏览器"]
+        guide["intro"] = guide.get("intro") or "本期整理公开检索到的开源项目，附官方仓库链接与协议信息，点击名称跳转查看。"
+        guide["steps"] = [
+            {"step": 1, "action": "浏览下方推荐卡片，按用途和平台挑出感兴趣的项目。",
+             "tip": "卡片标注了开源协议与主要语言。"},
+            {"step": 2, "action": "点击项目名称跳转到官方仓库，阅读 README 与 LICENSE。",
+             "tip": "本仓库不复制其源码或安装包。"},
+            {"step": 3, "action": "按需到官方 Releases 下载安装，或自行克隆源码运行。",
+             "tip": "使用前遵守对应开源协议。"},
+        ]
+
     issue = len(history.get("entries", [])) + 1
 
     # 4. 生成成品 + 文档
@@ -86,8 +124,16 @@ def main():
         "date": date_str,
         "issue": issue,
         "items": [s["action"] for s in guide.get("steps", [])],
+        "repos": repos,
+        "code": script_meta["code"] if script_meta else "",
+        "run_example": script_meta["run_example"] if script_meta else "",
+        "desc": script_meta["desc"] if script_meta else "",
     }
-    app_html = templates.render_app(topic.get("tool_type", "counter"), tpl_params)
+
+    if tool_type == "script-py":
+        app_html = templates.render_script_view(tpl_params)
+    else:
+        app_html = templates.render_app(tool_type, tpl_params)
 
     meta = {
         "issue": issue,
@@ -96,7 +142,7 @@ def main():
         "seed": seed,
         "category": category,
         "level": guide.get("level", "入门"),
-        "tool_type": topic.get("tool_type", "counter"),
+        "tool_type": tool_type,
         "route": route,
         "model": guide.get("_model", ""),
         "source_count": len(sources),
@@ -111,6 +157,9 @@ def main():
         f.write(render.render_html(ctx))
     with open(os.path.join(day_dir, "guide.md"), "w", encoding="utf-8") as f:
         f.write(render.render_md(ctx))
+    if script_meta:
+        with open(os.path.join(day_dir, script_meta["file"]), "w", encoding="utf-8") as f:
+            f.write(script_meta["code"])
     with open(os.path.join(day_dir, "meta.json"), "w", encoding="utf-8") as f:
         json.dump({"meta": meta, "sources": sources}, f, ensure_ascii=False, indent=2)
 

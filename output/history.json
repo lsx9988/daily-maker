@@ -2,12 +2,12 @@
   "entries": [
     {
       "date": "2026-11-13",
-      "issue": 2,
-      "title": "常用长度单位换算器",
-      "category": "换算与计算",
+      "issue": 1,
+      "title": "文本字数与格式统计工具",
+      "category": "文本处理工具",
       "level": "入门",
       "route": "模板生成",
-      "tool_type": "unit-converter",
+      "tool_type": "text-tools",
       "source_count": 0
     }
   ],

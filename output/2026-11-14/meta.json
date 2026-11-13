@@ -1,0 +1,19 @@
+{
+  "meta": {
+    "issue": 2,
+    "date": "2026-11-14",
+    "gen_time": "2026-11-14 05:49:54 北京时间",
+    "seed": 20261114,
+    "category": "文本处理工具",
+    "level": "入门",
+    "tool_type": "text-tools",
+    "route": "模板生成",
+    "model": "",
+    "source_count": 0,
+    "tags": [
+      "文本",
+      "去重"
+    ]
+  },
+  "sources": []
+}

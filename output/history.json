@@ -2,8 +2,8 @@
   "entries": [
     {
       "date": "2026-11-13",
-      "issue": 1,
-      "title": "文本字数与格式统计工具",
+      "issue": 2,
+      "title": "多行文本去重与整理工具",
       "category": "文本处理工具",
       "level": "入门",
       "route": "模板生成",

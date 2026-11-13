@@ -247,6 +247,240 @@ document.getElementById('regen').onclick=draw;draw();""".replace("SEED", str(p["
     return _shell(p["title"], p["date"], p["issue"], body, script)
 
 
+# ---------- Python 脚本模板（纯标准库、跨平台、默认 dry-run，已本地实测） ----------
+
+_SCRIPT_RENAME = r'''#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""批量文件按「前缀_序号.扩展名」重命名。默认仅预览（dry-run），加 --apply 才执行。"""
+import argparse
+import os
+import sys
+
+
+def main():
+    ap = argparse.ArgumentParser(description="批量文件按序号重命名（默认预览）")
+    ap.add_argument("--dir", default=".", help="目标目录，默认当前目录")
+    ap.add_argument("--prefix", default="file", help="文件名前缀，默认 file")
+    ap.add_argument("--start", type=int, default=1, help="序号起始，默认 1")
+    ap.add_argument("--apply", action="store_true", help="真正执行重命名；不加则只预览")
+    args = ap.parse_args()
+
+    if not os.path.isdir(args.dir):
+        print(f"目录不存在：{args.dir}")
+        sys.exit(1)
+
+    files = sorted(
+        f for f in os.listdir(args.dir)
+        if os.path.isfile(os.path.join(args.dir, f)) and not f.startswith(".")
+    )
+    if not files:
+        print("目录里没有可处理的文件。")
+        return
+
+    plan = []
+    for i, name in enumerate(files, start=args.start):
+        ext = os.path.splitext(name)[1]
+        new = f"{args.prefix}_{i:03d}{ext}"
+        plan.append((name, new))
+
+    for old, new in plan:
+        print(f"  {old}  ->  {new}")
+
+    if not args.apply:
+        print("\n这是预览，未改动任何文件。确认无误后加 --apply 执行。")
+        return
+
+    for old, new in plan:
+        if old == new:
+            continue
+        os.rename(os.path.join(args.dir, old), os.path.join(args.dir, new))
+    print(f"\n已重命名 {len(plan)} 个文件。")
+
+
+if __name__ == "__main__":
+    main()
+'''
+
+_SCRIPT_TEXT = r'''#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""文本文件行数/字符统计与按行去重。默认只统计预览，加 --write 才写出去重文件。"""
+import argparse
+import os
+import sys
+
+
+def main():
+    ap = argparse.ArgumentParser(description="文本统计与按行去重（默认预览）")
+    ap.add_argument("file", help="要处理的文本文件路径")
+    ap.add_argument("--write", action="store_true", help="写出去重后的 .dedup.txt；不加则只统计")
+    args = ap.parse_args()
+
+    if not os.path.isfile(args.file):
+        print(f"文件不存在：{args.file}")
+        sys.exit(1)
+
+    with open(args.file, "r", encoding="utf-8-sig", errors="ignore") as f:
+        lines = f.read().splitlines()
+
+    total = len(lines)
+    nonempty = [ln for ln in lines if ln.strip()]
+    chars = sum(len(ln) for ln in nonempty)
+    seen = set()
+    dedup = []
+    for ln in nonempty:
+        if ln not in seen:
+            seen.add(ln)
+            dedup.append(ln)
+
+    print(f"总行数：{total}")
+    print(f"非空行数：{len(nonempty)}")
+    print(f"非空字符数：{chars}")
+    print(f"去重后行数：{len(dedup)}（移除 {len(nonempty) - len(dedup)} 行重复）")
+
+    if not args.write:
+        print("\n这是预览，未写出文件。确认后加 --write 生成 .dedup.txt。")
+        return
+
+    base, ext = os.path.splitext(args.file)
+    out = base + ".dedup" + (ext or ".txt")
+    with open(out, "w", encoding="utf-8") as f:
+        f.write("\n".join(dedup) + "\n")
+    print(f"\n已写出：{out}")
+
+
+if __name__ == "__main__":
+    main()
+'''
+
+_SCRIPT_ORGANIZE = r'''#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""按扩展名把目录里的散文件归类到子文件夹。默认预览，加 --apply 才移动。"""
+import argparse
+import os
+import sys
+
+
+def bucket(name):
+    ext = os.path.splitext(name)[1].lower().lstrip(".")
+    return ext if ext else "_noext"
+
+
+def main():
+    ap = argparse.ArgumentParser(description="按扩展名归类文件（默认预览）")
+    ap.add_argument("--dir", default=".", help="目标目录，默认当前目录")
+    ap.add_argument("--apply", action="store_true", help="真正移动文件；不加则只预览")
+    args = ap.parse_args()
+
+    if not os.path.isdir(args.dir):
+        print(f"目录不存在：{args.dir}")
+        sys.exit(1)
+
+    moves = []
+    for name in sorted(os.listdir(args.dir)):
+        full = os.path.join(args.dir, name)
+        if not os.path.isfile(full) or name.startswith("."):
+            continue
+        moves.append((name, bucket(name)))
+
+    if not moves:
+        print("目录里没有可处理的文件。")
+        return
+
+    for name, b in moves:
+        print(f"  {name}  ->  {b}/")
+
+    if not args.apply:
+        print("\n这是预览，未移动任何文件。确认无误后加 --apply 执行。")
+        return
+
+    for name, b in moves:
+        folder = os.path.join(args.dir, b)
+        os.makedirs(folder, exist_ok=True)
+        os.rename(os.path.join(args.dir, name), os.path.join(folder, name))
+    print(f"\n已归类 {len(moves)} 个文件。")
+
+
+if __name__ == "__main__":
+    main()
+'''
+
+SCRIPTS = {
+    "rename": {
+        "file": "tool.py",
+        "desc": "批量文件按「前缀_序号.扩展名」重命名；默认只预览，加 --apply 才真正改名。",
+        "run_example": "python tool.py --dir ./photos --prefix img --apply",
+        "code": _SCRIPT_RENAME,
+    },
+    "text": {
+        "file": "tool.py",
+        "desc": "统计文本文件行数 / 字符数并按行去重；默认只统计，加 --write 才写出 .dedup 文件。",
+        "run_example": "python tool.py notes.txt --write",
+        "code": _SCRIPT_TEXT,
+    },
+    "organize": {
+        "file": "tool.py",
+        "desc": "按扩展名把散文件归类到对应子文件夹；默认预览，加 --apply 才真正移动。",
+        "run_example": "python tool.py --dir ./downloads --apply",
+        "code": _SCRIPT_ORGANIZE,
+    },
+}
+
+
+def render_script(script_id):
+    """返回脚本元数据 dict：code / file / run_example / desc。"""
+    return dict(SCRIPTS.get(script_id) or SCRIPTS["rename"])
+
+
+def render_script_view(p):
+    code = _esc(p["code"])
+    run = _esc(p.get("run_example", "python tool.py --help"))
+    body = f"""
+<div class="card">
+  <div class="muted" style="margin-bottom:8px">{_esc(p.get('desc', ''))}</div>
+  <div class="row" style="margin-bottom:10px">
+    <button id="copy">复制脚本</button>
+    <span class="muted">运行示例：<code>{run}</code></span>
+  </div>
+  <pre style="background:#1e2430;color:#e6e9ef;padding:14px;border-radius:10px;overflow:auto;font-size:12px"><code id="src">{code}</code></pre>
+</div>"""
+    script = """
+const code=document.getElementById('src').textContent;
+document.getElementById('copy').onclick=()=>{navigator.clipboard?navigator.clipboard.writeText(code).then(()=>alert('已复制脚本')):prompt('复制脚本',code);};"""
+    return _shell(p["title"], p["date"], p["issue"], body, script)
+
+
+def render_software_pick(p):
+    repos = p.get("repos") or []
+    if repos:
+        cards = []
+        for r in repos[:8]:
+            name = _esc(r.get("title", ""))
+            url = _esc(r.get("url", ""))
+            desc = _esc(r.get("snippet", "") or "（暂无简介）")
+            lic = _esc(r.get("license", "未知"))
+            stars = r.get("stars", 0)
+            lang = _esc(r.get("lang", ""))
+            meta = f"协议：{lic}" + (f" · 语言：{lang}" if lang else "")
+            cards.append(
+                f'<div style="border:1px solid #e6e9ee;border-radius:10px;padding:12px 14px;margin-bottom:12px">'
+                f'<div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap">'
+                f'<a href="{url}" target="_blank" rel="noopener noreferrer" style="font-weight:600">{name}</a>'
+                f'<span class="muted">★ {stars}</span></div>'
+                f'<div style="font-size:13px;margin:6px 0">{desc}</div>'
+                f'<div class="muted" style="font-size:12px">{meta}</div></div>'
+            )
+        grid = "".join(cards)
+    else:
+        grid = ('<div class="card"><p>今日未检索到合适的开源项目，可稍后在 GitHub 按关键词再找；'
+                '推荐条目仅作信息整理，许可证以各仓库内 LICENSE 为准。</p></div>')
+    body = f"""
+<div class="card">
+  <div class="muted" style="margin-bottom:10px">以下为公开检索到的开源项目，点击名称跳转官方仓库；本仓库不复制其安装包或源码，使用前请阅读对应 LICENSE。</div>
+  {grid}
+</div>"""
+    return _shell(p["title"], p["date"], p["issue"], body, "")
+
+
 TEMPLATES = {
     "color-palette": render_color_palette,
     "gradient": render_gradient,
@@ -258,6 +492,7 @@ TEMPLATES = {
     "checklist": render_checklist,
     "counter": render_counter,
     "generative-art": render_generative_art,
+    "software-pick": render_software_pick,
 }
 
 

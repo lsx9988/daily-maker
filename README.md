@@ -1,19 +1,19 @@
 # daily-maker
 
-每天自动产出一个**能直接打开使用**的小工具/小作品，配一份图文说明：颜色设计、文本处理、换算计算、计时专注、决策随机、清单对照、生成艺术等方向轮转。成品是本地单文件网页（离线可用、不上传数据），按日期归档，历史作品不回写、不覆盖。
+每天自动产出一个**能直接使用**的小工具/小作品，配一份图文说明。成品分三类：本地单文件网页工具（离线可用、不上传数据）、纯标准库 Python 小脚本、开源项目推荐卡片（只链官方仓库，不复制安装包/源码）。按日期归档，历史作品不回写、不覆盖。
 
 ## 它每天做什么
 
 1. **选题**：按当天日期作随机种子，从 `config/topics.json` 选题池抽取，自动避开近期用过的题目与敏感词。
-2. **取材**：检索多个公开来源的摘要（维基 / DuckDuckGo / StackExchange），保留参考链接。
+2. **取材**：检索多个公开来源的摘要（维基 / DuckDuckGo / StackExchange / GitHub），保留参考链接。
 3. **归纳**：配置了 LLM Key 时由模型把素材整理成结构化教程；无 Key 或调用失败时，自动降级为模板拼装；素材也不足时使用内置兜底条目。
-4. **产出**：写入 `output/YYYY-MM-DD/`（`app.html` 可直接使用的成品、`index.html` 图文说明、`guide.md` 可读版、`meta.json` 元数据），并在下表登记索引。
+4. **产出**：写入 `output/YYYY-MM-DD/`（`app.html` 成品页、`index.html` 图文说明、`guide.md` 可读版、`meta.json` 元数据；脚本类另附 `tool.py`），并在下表登记索引。
 
 ## 每日产出
 
 | 日期 | 标题 | 类别 | 难度 | 生成方式 |
 |---|---|---|---|---|
-| 2026-11-13 | [#2 多行文本去重与整理工具](output/2026-11-13/index.html) | 文本处理工具 | 入门 | 模板生成 |
+| 2026-11-13 | [#1 文本字数与格式统计工具](output/2026-11-13/index.html) | 文本处理工具 | 入门 | 模板生成 |
 
 ## 目录结构
 
@@ -24,7 +24,7 @@ daily-maker/
 ├── scripts/research.py       # 公开来源检索（多源降级）
 ├── scripts/llm.py            # 可选 LLM 归纳（OpenRouter 兼容）
 ├── scripts/render.py         # HTML / Markdown / README 索引渲染
-├── scripts/templates.py      # 本地已测可用的单文件成品模板库
+├── scripts/templates.py      # 本地已测模板库（网页工具 / Python 脚本 / 开源推荐卡片）
 ├── scripts/generate.py       # 主流程
 ├── output/YYYY-MM-DD/        # 当日作品归档
 └── .github/workflows/daily.yml

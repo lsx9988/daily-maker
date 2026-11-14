@@ -19,7 +19,17 @@
       "route": "模板生成",
       "tool_type": "text-tools",
       "source_count": 0
+    },
+    {
+      "date": "2026-11-15",
+      "issue": 3,
+      "title": "随机抽签与决策器",
+      "category": "决策与随机",
+      "level": "入门",
+      "route": "模板生成",
+      "tool_type": "decision",
+      "source_count": 0
     }
   ],
-  "updated": "2026-11-14"
+  "updated": "2026-11-15"
 }

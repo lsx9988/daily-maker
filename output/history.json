@@ -29,7 +29,17 @@
       "route": "模板生成",
       "tool_type": "decision",
       "source_count": 0
+    },
+    {
+      "date": "2026-11-16",
+      "issue": 4,
+      "title": "可暂停的倒计时器",
+      "category": "计时与专注",
+      "level": "入门",
+      "route": "模板生成",
+      "tool_type": "timer",
+      "source_count": 0
     }
   ],
-  "updated": "2026-11-15"
+  "updated": "2026-11-16"
 }

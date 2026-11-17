@@ -39,7 +39,17 @@
       "route": "模板生成",
       "tool_type": "timer",
       "source_count": 0
+    },
+    {
+      "date": "2026-11-17",
+      "issue": 5,
+      "title": "常用长度单位换算器",
+      "category": "换算与计算",
+      "level": "入门",
+      "route": "模板生成",
+      "tool_type": "unit-converter",
+      "source_count": 0
     }
   ],
-  "updated": "2026-11-16"
+  "updated": "2026-11-17"
 }

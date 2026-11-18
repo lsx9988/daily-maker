@@ -59,7 +59,17 @@
       "route": "模板生成",
       "tool_type": "checklist",
       "source_count": 0
+    },
+    {
+      "date": "2026-11-19",
+      "issue": 7,
+      "title": "按扩展名归类文件脚本",
+      "category": "小开发与脚本",
+      "level": "入门",
+      "route": "模板生成",
+      "tool_type": "script-py",
+      "source_count": 0
     }
   ],
-  "updated": "2026-11-18"
+  "updated": "2026-11-19"
 }

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>按扩展名归类文件脚本</title>
+<style>
+:root{--accent:#4f6b9a}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:#f7f7f5;color:#1a1b1c;font-family:-apple-system,'Segoe UI','Microsoft YaHei',sans-serif;line-height:1.6}
+.wrap{max-width:760px;margin:0 auto;padding:24px 16px}
+.top{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#5f6670;margin-bottom:14px}
+.top a{color:#4f6b9a;text-decoration:none}
+h1{font-size:22px;margin:0 0 4px}
+.sub{font-size:13px;color:#5f6670;margin-bottom:18px}
+.card{background:#fff;border-radius:10px;padding:18px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+button{font:inherit;border:1px solid var(--accent);background:var(--accent);color:#fff;border-radius:8px;padding:8px 14px;cursor:pointer}
+button.ghost{background:#fff;color:var(--accent)}
+input,select,textarea{font:inherit;padding:8px 10px;border:1px solid #d8dbe0;border-radius:8px;width:100%}
+textarea{min-height:120px;resize:vertical}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.muted{color:#8a9099;font-size:12px}
+.big{font-size:40px;font-weight:700;text-align:center;margin:10px 0}
+</style></head><body><div class="wrap">
+<div class="top"><span>第 7 期 · 2026-11-19</span><a href="index.html">← 返回说明</a></div>
+<h1>按扩展名归类文件脚本</h1>
+<div class="sub">本地单文件工具，离线可用，不上传数据。</div>
+
+<div class="card">
+  <div class="muted" style="margin-bottom:8px">按扩展名把散文件归类到对应子文件夹；默认预览，加 --apply 才真正移动。</div>
+  <div class="row" style="margin-bottom:10px">
+    <button id="copy">复制脚本</button>
+    <span class="muted">运行示例：<code>python tool.py --dir ./downloads --apply</code></span>
+  </div>
+  <pre style="background:#1e2430;color:#e6e9ef;padding:14px;border-radius:10px;overflow:auto;font-size:12px"><code id="src">#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+&quot;&quot;&quot;按扩展名把目录里的散文件归类到子文件夹。默认预览，加 --apply 才移动。&quot;&quot;&quot;
+import argparse
+import os
+import sys
+
+
+def bucket(name):
+    ext = os.path.splitext(name)[1].lower().lstrip(&quot;.&quot;)
+    return ext if ext else &quot;_noext&quot;
+
+
+def main():
+    ap = argparse.ArgumentParser(description=&quot;按扩展名归类文件（默认预览）&quot;)
+    ap.add_argument(&quot;--dir&quot;, default=&quot;.&quot;, help=&quot;目标目录，默认当前目录&quot;)
+    ap.add_argument(&quot;--apply&quot;, action=&quot;store_true&quot;, help=&quot;真正移动文件；不加则只预览&quot;)
+    args = ap.parse_args()
+
+    if not os.path.isdir(args.dir):
+        print(f&quot;目录不存在：{args.dir}&quot;)
+        sys.exit(1)
+
+    moves = []
+    for name in sorted(os.listdir(args.dir)):
+        full = os.path.join(args.dir, name)
+        if not os.path.isfile(full) or name.startswith(&quot;.&quot;):
+            continue
+        moves.append((name, bucket(name)))
+
+    if not moves:
+        print(&quot;目录里没有可处理的文件。&quot;)
+        return
+
+    for name, b in moves:
+        print(f&quot;  {name}  -&gt;  {b}/&quot;)
+
+    if not args.apply:
+        print(&quot;\n这是预览，未移动任何文件。确认无误后加 --apply 执行。&quot;)
+        return
+
+    for name, b in moves:
+        folder = os.path.join(args.dir, b)
+        os.makedirs(folder, exist_ok=True)
+        os.rename(os.path.join(args.dir, name), os.path.join(folder, name))
+    print(f&quot;\n已归类 {len(moves)} 个文件。&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre>
+</div>
+</div>
+<script>
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+
+const code=document.getElementById('src').textContent;
+document.getElementById('copy').onclick=()=>{navigator.clipboard?navigator.clipboard.writeText(code).then(()=>alert('已复制脚本')):prompt('复制脚本',code);};
+</script></body></html>

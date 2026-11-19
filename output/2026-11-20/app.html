@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>文本文件去重与统计脚本</title>
+<style>
+:root{--accent:#4f6b9a}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:#f7f7f5;color:#1a1b1c;font-family:-apple-system,'Segoe UI','Microsoft YaHei',sans-serif;line-height:1.6}
+.wrap{max-width:760px;margin:0 auto;padding:24px 16px}
+.top{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#5f6670;margin-bottom:14px}
+.top a{color:#4f6b9a;text-decoration:none}
+h1{font-size:22px;margin:0 0 4px}
+.sub{font-size:13px;color:#5f6670;margin-bottom:18px}
+.card{background:#fff;border-radius:10px;padding:18px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+button{font:inherit;border:1px solid var(--accent);background:var(--accent);color:#fff;border-radius:8px;padding:8px 14px;cursor:pointer}
+button.ghost{background:#fff;color:var(--accent)}
+input,select,textarea{font:inherit;padding:8px 10px;border:1px solid #d8dbe0;border-radius:8px;width:100%}
+textarea{min-height:120px;resize:vertical}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.muted{color:#8a9099;font-size:12px}
+.big{font-size:40px;font-weight:700;text-align:center;margin:10px 0}
+</style></head><body><div class="wrap">
+<div class="top"><span>第 8 期 · 2026-11-20</span><a href="index.html">← 返回说明</a></div>
+<h1>文本文件去重与统计脚本</h1>
+<div class="sub">本地单文件工具，离线可用，不上传数据。</div>
+
+<div class="card">
+  <div class="muted" style="margin-bottom:8px">统计文本文件行数 / 字符数并按行去重；默认只统计，加 --write 才写出 .dedup 文件。</div>
+  <div class="row" style="margin-bottom:10px">
+    <button id="copy">复制脚本</button>
+    <span class="muted">运行示例：<code>python tool.py notes.txt --write</code></span>
+  </div>
+  <pre style="background:#1e2430;color:#e6e9ef;padding:14px;border-radius:10px;overflow:auto;font-size:12px"><code id="src">#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+&quot;&quot;&quot;文本文件行数/字符统计与按行去重。默认只统计预览，加 --write 才写出去重文件。&quot;&quot;&quot;
+import argparse
+import os
+import sys
+
+
+def main():
+    ap = argparse.ArgumentParser(description=&quot;文本统计与按行去重（默认预览）&quot;)
+    ap.add_argument(&quot;file&quot;, help=&quot;要处理的文本文件路径&quot;)
+    ap.add_argument(&quot;--write&quot;, action=&quot;store_true&quot;, help=&quot;写出去重后的 .dedup.txt；不加则只统计&quot;)
+    args = ap.parse_args()
+
+    if not os.path.isfile(args.file):
+        print(f&quot;文件不存在：{args.file}&quot;)
+        sys.exit(1)
+
+    with open(args.file, &quot;r&quot;, encoding=&quot;utf-8-sig&quot;, errors=&quot;ignore&quot;) as f:
+        lines = f.read().splitlines()
+
+    total = len(lines)
+    nonempty = [ln for ln in lines if ln.strip()]
+    chars = sum(len(ln) for ln in nonempty)
+    seen = set()
+    dedup = []
+    for ln in nonempty:
+        if ln not in seen:
+            seen.add(ln)
+            dedup.append(ln)
+
+    print(f&quot;总行数：{total}&quot;)
+    print(f&quot;非空行数：{len(nonempty)}&quot;)
+    print(f&quot;非空字符数：{chars}&quot;)
+    print(f&quot;去重后行数：{len(dedup)}（移除 {len(nonempty) - len(dedup)} 行重复）&quot;)
+
+    if not args.write:
+        print(&quot;\n这是预览，未写出文件。确认后加 --write 生成 .dedup.txt。&quot;)
+        return
+
+    base, ext = os.path.splitext(args.file)
+    out = base + &quot;.dedup&quot; + (ext or &quot;.txt&quot;)
+    with open(out, &quot;w&quot;, encoding=&quot;utf-8&quot;) as f:
+        f.write(&quot;\n&quot;.join(dedup) + &quot;\n&quot;)
+    print(f&quot;\n已写出：{out}&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre>
+</div>
+</div>
+<script>
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+
+const code=document.getElementById('src').textContent;
+document.getElementById('copy').onclick=()=>{navigator.clipboard?navigator.clipboard.writeText(code).then(()=>alert('已复制脚本')):prompt('复制脚本',code);};
+</script></body></html>

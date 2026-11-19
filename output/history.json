@@ -69,7 +69,17 @@
       "route": "模板生成",
       "tool_type": "script-py",
       "source_count": 0
+    },
+    {
+      "date": "2026-11-20",
+      "issue": 8,
+      "title": "文本文件去重与统计脚本",
+      "category": "小开发与脚本",
+      "level": "入门",
+      "route": "模板生成",
+      "tool_type": "script-py",
+      "source_count": 0
     }
   ],
-  "updated": "2026-11-19"
+  "updated": "2026-11-20"
 }

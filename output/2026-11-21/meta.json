@@ -1,0 +1,74 @@
+{
+  "meta": {
+    "issue": 9,
+    "date": "2026-11-21",
+    "gen_time": "2026-11-21 06:32:00 北京时间",
+    "seed": 20261121,
+    "category": "开源工具推荐",
+    "level": "入门",
+    "tool_type": "software-pick",
+    "route": "模板生成",
+    "model": "",
+    "source_count": 6,
+    "tags": [
+      "开源",
+      "推荐"
+    ]
+  },
+  "sources": [
+    {
+      "title": "krishna3163/awesome-android-app-repositories",
+      "url": "https://github.com/krishna3163/awesome-android-app-repositories",
+      "snippet": "⚡ Curated & continuously updated catalog of 1,600+ open-source Android apps, GitHub repositories, developer tools, AI platforms, and utilities automatically synchronized from Telegram.",
+      "source": "GitHub",
+      "license": "未知",
+      "stars": 22,
+      "lang": "Python"
+    },
+    {
+      "title": "maheshndev/awesome-repos",
+      "url": "https://github.com/maheshndev/awesome-repos",
+      "snippet": "Awesome Repositories - Explore top-rated GitHub repositories curated for developers—tools, libraries, and projects to boost productivity and learning in one place. Discover the best in open-source tec",
+      "source": "GitHub",
+      "license": "未知",
+      "stars": 9,
+      "lang": "HTML"
+    },
+    {
+      "title": "HenryLok0/DevProjectConnector",
+      "url": "https://github.com/HenryLok0/DevProjectConnector",
+      "snippet": "A powerful CLI tool that analyzes your GitHub profile to recommend open-source projects tailored to your interests and skills. DevProjectConnector connects you with potential collaborators, helping yo",
+      "source": "GitHub",
+      "license": "MIT",
+      "stars": 9,
+      "lang": "JavaScript"
+    },
+    {
+      "title": "ImFelipeOliveira/standcast",
+      "url": "https://github.com/ImFelipeOliveira/standcast",
+      "snippet": "Open source daily standup tool for software teams: write your standup in your AI agent (Claude Code, Cursor, any MCP client) from your GitHub and Linear activity, confirm it, and post one team digest ",
+      "source": "GitHub",
+      "license": "MIT",
+      "stars": 9,
+      "lang": "TypeScript"
+    },
+    {
+      "title": "Cashcoin123/Cashcoin123",
+      "url": "https://github.com/Cashcoin123/Cashcoin123",
+      "snippet": "# Application card: GitHub Copilot Chat Learn how to use GitHub Copilot Chat responsibly by understanding its purposes, capabilities, and limitations. ## What is an Application Card? GitHub’s applicat",
+      "source": "GitHub",
+      "license": "未知",
+      "stars": 7,
+      "lang": ""
+    },
+    {
+      "title": "jdwhite0/jd-ai-operating-system",
+      "url": "https://github.com/jdwhite0/jd-ai-operating-system",
+      "snippet": "JD AI OS — open-source personal OS for your computer. Open any AI chat: it guides setup, installs tools, and runs your system from files you own. GitHub + Vercel required. By JD Productions.",
+      "source": "GitHub",
+      "license": "NOASSERTION",
+      "stars": 4,
+      "lang": "Shell"
+    }
+  ]
+}

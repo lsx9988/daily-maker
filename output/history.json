@@ -89,7 +89,17 @@
       "route": "模板生成",
       "tool_type": "software-pick",
       "source_count": 6
+    },
+    {
+      "date": "2026-11-22",
+      "issue": 10,
+      "title": "今日开源开发者小工具",
+      "category": "开源工具推荐",
+      "level": "入门",
+      "route": "模板生成",
+      "tool_type": "software-pick",
+      "source_count": 4
     }
   ],
-  "updated": "2026-11-21"
+  "updated": "2026-11-22"
 }

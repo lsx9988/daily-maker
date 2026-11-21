@@ -1,0 +1,56 @@
+{
+  "meta": {
+    "issue": 10,
+    "date": "2026-11-22",
+    "gen_time": "2026-11-22 05:29:43 北京时间",
+    "seed": 20261122,
+    "category": "开源工具推荐",
+    "level": "入门",
+    "tool_type": "software-pick",
+    "route": "模板生成",
+    "model": "",
+    "source_count": 4,
+    "tags": [
+      "开源",
+      "开发"
+    ]
+  },
+  "sources": [
+    {
+      "title": "chikitang/A",
+      "url": "https://github.com/chikitang/A",
+      "snippet": "!DOCTYPE html> Your Repositories \"all\" Skip to content --> In this user All GitHub ↵ Jump to ↵ No suggested jump to results In this user All GitHub ↵ Jump to ↵ Search All GitHub ↵ Jump to ↵ In this us",
+      "source": "GitHub",
+      "license": "未知",
+      "stars": 78,
+      "lang": ""
+    },
+    {
+      "title": "O2sa/DevImpact",
+      "url": "https://github.com/O2sa/DevImpact",
+      "snippet": "A smart tool to compare developers by real impact in open-source — not just stars and followers",
+      "source": "GitHub",
+      "license": "MIT",
+      "stars": 38,
+      "lang": "TypeScript"
+    },
+    {
+      "title": "openlab-x/GithubFlareStats",
+      "url": "https://github.com/openlab-x/GithubFlareStats",
+      "snippet": "GithubFlareStats is an open-source tool that generates dynamic, customizable images showcasing GitHub user statistics. With support for customizable themes, it allows developers to easily embed person",
+      "source": "GitHub",
+      "license": "MIT",
+      "stars": 8,
+      "lang": "Python"
+    },
+    {
+      "title": "tiennm99/awesome-ai-dev-tools",
+      "url": "https://github.com/tiennm99/awesome-ai-dev-tools",
+      "snippet": "Daily-updated ranking of open-source AI coding agents and developer tools by GitHub stars, with a dashboard",
+      "source": "GitHub",
+      "license": "Apache-2.0",
+      "stars": 4,
+      "lang": "Go"
+    }
+  ]
+}

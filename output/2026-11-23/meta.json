@@ -1,0 +1,19 @@
+{
+  "meta": {
+    "issue": 11,
+    "date": "2026-11-23",
+    "gen_time": "2026-11-23 05:36:30 北京时间",
+    "seed": 20261123,
+    "category": "小开发与脚本",
+    "level": "入门",
+    "tool_type": "script-py",
+    "route": "模板生成",
+    "model": "",
+    "source_count": 0,
+    "tags": [
+      "脚本",
+      "文件"
+    ]
+  },
+  "sources": []
+}

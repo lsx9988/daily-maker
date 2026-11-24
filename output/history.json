@@ -109,7 +109,17 @@
       "route": "模板生成",
       "tool_type": "script-py",
       "source_count": 0
+    },
+    {
+      "date": "2026-11-24",
+      "issue": 12,
+      "title": "日期与时间戳互转工具",
+      "category": "换算与计算",
+      "level": "入门",
+      "route": "模板生成",
+      "tool_type": "timestamp",
+      "source_count": 0
     }
   ],
-  "updated": "2026-11-23"
+  "updated": "2026-11-24"
 }

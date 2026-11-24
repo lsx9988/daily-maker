@@ -1,0 +1,19 @@
+{
+  "meta": {
+    "issue": 12,
+    "date": "2026-11-24",
+    "gen_time": "2026-11-24 10:46:59 北京时间",
+    "seed": 20261124,
+    "category": "换算与计算",
+    "level": "入门",
+    "tool_type": "timestamp",
+    "route": "模板生成",
+    "model": "",
+    "source_count": 0,
+    "tags": [
+      "时间",
+      "转换"
+    ]
+  },
+  "sources": []
+}

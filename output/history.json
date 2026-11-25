@@ -119,7 +119,17 @@
       "route": "模板生成",
       "tool_type": "timestamp",
       "source_count": 0
+    },
+    {
+      "date": "2026-11-25",
+      "issue": 13,
+      "title": "桌面壁纸几何生成艺术",
+      "category": "颜色与设计",
+      "level": "入门",
+      "route": "模板生成",
+      "tool_type": "generative-art",
+      "source_count": 0
     }
   ],
-  "updated": "2026-11-24"
+  "updated": "2026-11-25"
 }

@@ -129,7 +129,17 @@
       "route": "模板生成",
       "tool_type": "generative-art",
       "source_count": 0
+    },
+    {
+      "date": "2026-11-26",
+      "issue": 14,
+      "title": "渐变背景生成器",
+      "category": "颜色与设计",
+      "level": "入门",
+      "route": "模板生成",
+      "tool_type": "gradient",
+      "source_count": 0
     }
   ],
-  "updated": "2026-11-25"
+  "updated": "2026-11-26"
 }

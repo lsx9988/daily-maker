@@ -139,7 +139,17 @@
       "route": "模板生成",
       "tool_type": "gradient",
       "source_count": 0
+    },
+    {
+      "date": "2026-11-27",
+      "issue": 15,
+      "title": "小组件配色对照卡",
+      "category": "颜色与设计",
+      "level": "入门",
+      "route": "模板生成",
+      "tool_type": "checklist",
+      "source_count": 0
     }
   ],
-  "updated": "2026-11-26"
+  "updated": "2026-11-27"
 }
